@@ -45,7 +45,7 @@ export default function LeftElement() {
   )
 }
 
-function MinimizedContent({ onIconClick }) {
+function MinimizedContent({ onIconClick }:{ onIconClick: () => void }) {
   return (
     <div className="flex flex-col items-center justify-start min-h-full py-4 space-y-4">
       <MinimizedSection icon={<Folder />} label="Quick Access" onClick={onIconClick} />
@@ -59,7 +59,11 @@ function MinimizedContent({ onIconClick }) {
   )
 }
 
-function MinimizedSection({ icon, label, onClick }) {
+function MinimizedSection({ icon, label, onClick }: {
+  icon: React.ReactElement
+  label: string
+  onClick: () => void
+}) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -238,7 +242,7 @@ function PeopleYouFollow() {
   )
 }
 
-function SectionHeader({ title, icon }) {
+function SectionHeader({ title, icon }:{icon: React.ReactElement, title: string}) {
   return (
     <CardTitle className="text-lg font-semibold text-teal-700 flex items-center justify-between">
       <div className="flex items-center">
@@ -252,7 +256,7 @@ function SectionHeader({ title, icon }) {
   )
 }
 
-function QuickAccessItem({ icon, label }) {
+function QuickAccessItem({ icon, label }:{ icon: React.ReactElement ,label: string}) {
   return (
     <a href="#" className="flex items-center text-gray-600 hover:text-teal-600 transition-colors duration-200 group">
       {React.cloneElement(icon, { className: "h-5 w-5 mr-2" })}
@@ -262,7 +266,7 @@ function QuickAccessItem({ icon, label }) {
   )
 }
 
-function ContactItem({ name }) {
+function ContactItem({ name }:{name:string}) {
   return (
     <div className="flex items-center space-x-3">
       <Avatar className="h-8 w-8">
@@ -274,7 +278,7 @@ function ContactItem({ name }) {
   )
 }
 
-function ProjectItem({ name }) {
+function ProjectItem({ name }:{name:string}) {
   return (
     <div className="flex justify-between items-center group">
       <span className="text-sm text-gray-600">{name}</span>
@@ -283,7 +287,7 @@ function ProjectItem({ name }) {
   )
 }
 
-function AlbumItem({ name }) {
+function AlbumItem({ name }:{name:string}) {
   return (
     <div className="flex justify-between items-center group">
       <span className="text-sm text-gray-600">{name}</span>
@@ -292,7 +296,7 @@ function AlbumItem({ name }) {
   )
 }
 
-function OrganisationItem({ name, role }) {
+function OrganisationItem({ name, role }:{name:string, role:string}) {
   return (
     <div className="flex justify-between items-center group">
       <div>

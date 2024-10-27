@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Calendar, Folder, User, BarChart2, ChevronLeft, Settings, Plus, Image, Building, Users, FolderKanban, PanelsTopLeft, LayoutDashboard, ClipboardList, ChevronRight, LayoutPanelLeft } from 'lucide-react'
+import { Calendar, Folder, User, BarChart2, ChevronLeft, Settings, Plus, Image, Building, Users, FolderKanban, PanelsTopLeft, LayoutDashboard, ClipboardList, ChevronRight, LayoutPanelLeft, LucideIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
@@ -11,9 +11,20 @@ import { Progress } from "@/components/ui/progress"
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-export default function RightElement() {
+interface Task {
+  id: number;
+  text: string;
+  completed: boolean;
+}
+
+interface CurrentPage {
+  todo: number;
+  done: number;
+}
+
+export default function Component() {
   const [isMinimized, setIsMinimized] = useState(false)
-  const [tasks, setTasks] = useState([
+  const [tasks, setTasks] = useState<Task[]>([
     { id: 1, text: 'Complete project proposal', completed: false },
     { id: 2, text: 'Review team performance', completed: false },
     { id: 3, text: 'Update client presentation', completed: true },
@@ -32,7 +43,7 @@ export default function RightElement() {
     { id: 16, text: 'Set up CI/CD pipeline', completed: false },
   ])
   const [newTask, setNewTask] = useState('')
-  const [currentPage, setCurrentPage] = useState({ todo: 1, done: 1 })
+  const [currentPage, setCurrentPage] = useState<CurrentPage>({ todo: 1, done: 1 })
   const tasksPerPage = 4
 
   const toggleMinimize = () => {
@@ -99,7 +110,11 @@ export default function RightElement() {
   )
 }
 
-function MinimizedContent({ onIconClick }) {
+interface MinimizedContentProps {
+  onIconClick: () => void;
+}
+
+function MinimizedContent({ onIconClick }: MinimizedContentProps) {
   return (
     <div className="flex flex-col items-center justify-start min-h-full py-4 space-y-4">
       <MinimizedSection icon={<LayoutDashboard />} label="Boards" onClick={onIconClick} />
@@ -109,7 +124,13 @@ function MinimizedContent({ onIconClick }) {
   )
 }
 
-function MinimizedSection({ icon, label, onClick }) {
+interface MinimizedSectionProps {
+  icon: React.ReactElement;
+  label: string;
+  onClick: () => void;
+}
+
+function MinimizedSection({ icon, label, onClick }: MinimizedSectionProps) {
   return (
     <Tooltip>
       <TooltipTrigger asChild>
@@ -129,16 +150,27 @@ function MinimizedSection({ icon, label, onClick }) {
   )
 }
 
-function ExpandedContent({ tasks, newTask, setNewTask, addTask, toggleTask, currentPage, setCurrentPage, tasksPerPage }) {
+interface ExpandedContentProps {
+  tasks: Task[];
+  newTask: string;
+  setNewTask: React.Dispatch<React.SetStateAction<string>>;
+  addTask: () => void;
+  toggleTask: (id: number) => void;
+  currentPage: CurrentPage;
+  setCurrentPage: React.Dispatch<React.SetStateAction<CurrentPage>>;
+  tasksPerPage: number;
+}
+
+function ExpandedContent({ tasks, newTask, setNewTask, addTask, toggleTask, currentPage, setCurrentPage, tasksPerPage }: ExpandedContentProps) {
   return (
     <div className="space-y-4 p-4">
       <Boards />
       <PersonalProgress />
       <Tasks 
-        tasks={tasks} 
-        newTask={newTask} 
-        setNewTask={setNewTask} 
-        addTask={addTask} 
+        tasks={tasks}
+        newTask={newTask}
+        setNewTask={setNewTask}
+        addTask={addTask}
         toggleTask={toggleTask}
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
@@ -176,7 +208,13 @@ function Boards() {
   )
 }
 
-function BoardItem({ name, icon: Icon, color }) {
+interface BoardItemProps {
+  name: string;
+  icon: LucideIcon;
+  color: string;
+}
+
+function BoardItem({ name, icon: Icon, color }: BoardItemProps) {
   return (
     <div className="flex items-center space-x-3 group">
       <div className={`p-2 rounded-lg ${color}`}>
@@ -248,16 +286,28 @@ function PersonalProgress() {
   )
 }
 
-function Tasks({ tasks, newTask, setNewTask, addTask, toggleTask, currentPage, setCurrentPage, tasksPerPage }) {
+interface TasksProps {
+  tasks: Task[];
+  newTask: string;
+  setNewTask: React.Dispatch<React.SetStateAction<string>>;
+  addTask: () => void;
+  toggleTask: (taskId: number) => void;
+  currentPage: CurrentPage;
+  setCurrentPage: React.Dispatch<React.SetStateAction<CurrentPage>>;
+  tasksPerPage: number;
+}
+
+function Tasks({ tasks, newTask, setNewTask, addTask, toggleTask, currentPage, setCurrentPage, tasksPerPage }: TasksProps) {
   const todoTasks = tasks.filter(t => !t.completed)
   const doneTasks = tasks.filter(t => t.completed)
-
-  const paginateTasks = (taskList, page) => {
-    const startIndex = (page - 1) * tasksPerPage
-    return taskList.slice(startIndex, startIndex + tasksPerPage)
-  }
-
-  const getPageCount = (taskList) => Math.ceil(taskList.length / tasksPerPage)
+  
+  const paginateTasks = (taskList: Task[], page: number): Task[] => {
+    const startIndex = (page - 1) * tasksPerPage;
+    return taskList.slice(startIndex, startIndex + tasksPerPage);
+  };
+  
+  const getPageCount = (taskList: Task[]): number => 
+    Math.ceil(taskList.length / tasksPerPage);
 
   return (
     <Card>
@@ -292,6 +342,7 @@ function Tasks({ tasks, newTask, setNewTask, addTask, toggleTask, currentPage, s
           </TooltipProvider>
         </div>
         <Tabs defaultValue="todo" className="w-full">
+          
           <TabsList className="grid w-full grid-cols-2">
             <TabsTrigger value="todo">To Do ({todoTasks.length})</TabsTrigger>
             <TabsTrigger value="done">Done ({doneTasks.length})</TabsTrigger>
@@ -324,7 +375,12 @@ function Tasks({ tasks, newTask, setNewTask, addTask, toggleTask, currentPage, s
   )
 }
 
-function TaskList({ tasks, toggleTask }) {
+interface TaskListProps {
+  tasks: Task[];
+  toggleTask: (id: number) => void;
+}
+
+function TaskList({ tasks, toggleTask }: TaskListProps) {
   return (
     <ul className="space-y-2 mb-4">
       {tasks.map(task => (
@@ -349,7 +405,13 @@ function TaskList({ tasks, toggleTask }) {
   )
 }
 
-function Pagination({ currentPage, totalPages, onPageChange }) {
+interface PaginationProps {
+  currentPage: number;
+  totalPages: number;
+  onPageChange: (page: number) => void;
+}
+
+function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
   return (
     <div className="flex justify-between items-center mt-4">
       <Button 
