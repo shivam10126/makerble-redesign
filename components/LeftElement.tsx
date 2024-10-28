@@ -45,7 +45,7 @@ export default function LeftElement() {
   )
 }
 
-function MinimizedContent({ onIconClick }:{ onIconClick: () => void }) {
+function MinimizedContent({ onIconClick }: { onIconClick: () => void }) {
   return (
     <div className="flex flex-col items-center justify-start min-h-full py-4 space-y-4">
       <MinimizedSection icon={<Folder />} label="Quick Access" onClick={onIconClick} />
@@ -242,7 +242,7 @@ function PeopleYouFollow() {
   )
 }
 
-function SectionHeader({ title, icon }:{icon: React.ReactElement, title: string}) {
+function SectionHeader({ title, icon }: { icon: React.ReactElement, title: string }) {
   return (
     <CardTitle className="text-lg font-semibold text-teal-700 flex items-center justify-between">
       <div className="flex items-center">
@@ -256,7 +256,7 @@ function SectionHeader({ title, icon }:{icon: React.ReactElement, title: string}
   )
 }
 
-function QuickAccessItem({ icon, label }:{ icon: React.ReactElement ,label: string}) {
+function QuickAccessItem({ icon, label }: { icon: React.ReactElement, label: string }) {
   return (
     <a href="#" className="flex items-center text-gray-600 hover:text-teal-600 transition-colors duration-200 group">
       {React.cloneElement(icon, { className: "h-5 w-5 mr-2" })}
@@ -266,11 +266,11 @@ function QuickAccessItem({ icon, label }:{ icon: React.ReactElement ,label: stri
   )
 }
 
-function ContactItem({ name }:{name:string}) {
+function ContactItem({ name }: { name: string }) {
   return (
     <div className="flex items-center space-x-3">
       <Avatar className="h-8 w-8">
-        <AvatarImage src={`/placeholder.svg?height=32&width=32`} alt={name} />
+        <AvatarImage src={`/placeholder.svg?height=32&width=32`} alt={`Avatar of ${name}`} />
         <AvatarFallback>{name[0].toUpperCase()}</AvatarFallback>
       </Avatar>
       <span className="text-sm text-gray-600">{name}</span>
@@ -278,7 +278,7 @@ function ContactItem({ name }:{name:string}) {
   )
 }
 
-function ProjectItem({ name }:{name:string}) {
+function ProjectItem({ name }: { name: string }) {
   return (
     <div className="flex justify-between items-center group">
       <span className="text-sm text-gray-600">{name}</span>
@@ -287,7 +287,7 @@ function ProjectItem({ name }:{name:string}) {
   )
 }
 
-function AlbumItem({ name }:{name:string}) {
+function AlbumItem({ name }: { name: string }) {
   return (
     <div className="flex justify-between items-center group">
       <span className="text-sm text-gray-600">{name}</span>
@@ -296,7 +296,7 @@ function AlbumItem({ name }:{name:string}) {
   )
 }
 
-function OrganisationItem({ name, role }:{name:string, role:string}) {
+function OrganisationItem({ name, role }: { name: string, role: string }) {
   return (
     <div className="flex justify-between items-center group">
       <div>
