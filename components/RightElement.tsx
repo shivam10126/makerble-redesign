@@ -1,9 +1,8 @@
 'use client'
 
 import React, { useState } from 'react'
-import { Calendar, Folder, User, BarChart2, ChevronLeft, Settings, Plus, Image, Building, Users, FolderKanban, PanelsTopLeft, LayoutDashboard, ClipboardList, ChevronRight, LayoutPanelLeft, LucideIcon } from 'lucide-react'
+import { Calendar, BarChart2, ChevronLeft, Settings, Plus, Users, LayoutDashboard, ClipboardList, ChevronRight, LayoutPanelLeft, LucideIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "@/components/ui/card"
 import { ScrollArea } from "@/components/ui/scroll-area"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"

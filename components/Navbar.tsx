@@ -1,5 +1,5 @@
 import React from 'react'
-import { Bell, MessageSquareText, Zap, ChevronDown, Plus, Star, MoreHorizontal, User, Search, LayoutList, SquareMenu } from 'lucide-react'
+import { Bell, MessageSquareText, Zap, ChevronDown, Plus, Star, User, Search, LayoutList, SquareMenu } from 'lucide-react'
 import Image from 'next/image'
 import logoBig from "../assets/logoBig.png"
 import logoSmall from "../assets/logoSmall.png"
