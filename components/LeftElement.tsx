@@ -99,9 +99,9 @@ function ExpandedContent() {
 
 function QuickAccess() {
   return (
-    <Card>
+    <Card className='bg-white'>
       <CardHeader>
-        <CardTitle className="text-lg  font-semibold text-teal-700 flex items-center">
+        <CardTitle className="text-lg bg-white font-semibold text-teal-700 flex items-center">
           <Folder className="h-5 w-5 mr-2 text-teal-600" />
           Quick Access
         </CardTitle>
